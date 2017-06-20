@@ -12,7 +12,7 @@ public class LoginActivityPresenter implements LoginActivityMVP.Presenter {
     private LoginActivityMVP.View view; //Help lint as the view can be killed by Android
     private LoginActivityMVP.Model model;
 
-    LoginActivityPresenter(LoginActivityMVP.Model model) {
+    public LoginActivityPresenter(LoginActivityMVP.Model model) {
         this.model = model; //Constructor injection
     }
 
@@ -49,5 +49,21 @@ public class LoginActivityPresenter implements LoginActivityMVP.Presenter {
                 view.setLastName(user.getLastName());
             }
         }
+    }
+
+    @Override
+    public void saveUser() {
+
+        if (view != null) {
+            if (view.getFirstName().trim().equals("") || view.getLastName().trim().equals("")) {
+                view.showInputError();
+            } else {
+
+                model.createUser(view.getFirstName(), view.getLastName());
+                view.showUserSavedMessage();
+
+            }
+        }
+
     }
 }
