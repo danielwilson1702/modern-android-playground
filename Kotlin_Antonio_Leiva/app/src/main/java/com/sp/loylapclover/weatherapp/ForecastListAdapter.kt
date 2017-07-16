@@ -4,18 +4,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import com.sp.loylapclover.weatherapp.domain.model.DomainClasses
 import com.sp.loylapclover.weatherapp.extensions.ctx
 import com.squareup.picasso.Picasso
-import org.jetbrains.anko.find
+import kotlinx.android.synthetic.main.item_forecast.view.*
 
 /**
  * Created by Daniel on 15/07/2017.
  */
 class ForecastListAdapter(val weekForecast: DomainClasses.ForecastList,
-                          val itemClick: OnItemClickListener) :
+                          val itemClick: (DomainClasses.Forecast) -> Unit) :
         RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,28 +28,17 @@ class ForecastListAdapter(val weekForecast: DomainClasses.ForecastList,
         holder.bindForecast(weekForecast[position])
     }
 
-    class ViewHolder(view: View, val itemClick: OnItemClickListener) : RecyclerView.ViewHolder(view){
-
-        private val iconView: ImageView = view.find(R.id.icon)
-        private val dateView: TextView = view.find(R.id.date)
-        private val descriptionView: TextView = view.find(R.id.description)
-        private val maxTemperatureView: TextView = view.find(R.id.maxTemperature)
-        private val minTemperatureView: TextView = view.find(R.id.minTemperature)
+    class ViewHolder(view: View, val itemClick: (DomainClasses.Forecast) -> Unit) : RecyclerView.ViewHolder(view){
 
         fun bindForecast(forecast: DomainClasses.Forecast){
             with(forecast){
-                Picasso.with(itemView.ctx).load(iconUrl).into(iconView)
-                dateView.text = date
-                descriptionView.text = description
-                maxTemperatureView.text = "$high"
-                minTemperatureView.text = "$low"
+                Picasso.with(itemView.ctx).load(iconUrl).into(itemView.icon)
+                itemView.date.text = date
+                itemView.description.text = description
+                itemView.maxTemperature.text = "$high"
+                itemView.minTemperature.text = "$low"
                 itemView.setOnClickListener{ itemClick(this)}
             }
         }
     }
-
-    interface OnItemClickListener {
-        operator fun invoke(forecast: DomainClasses.Forecast)
-    }
-
 }
