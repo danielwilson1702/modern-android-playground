@@ -8,6 +8,8 @@ import com.sp.loylapclover.weatherapp.domain.model.DomainClasses
 import com.sp.loylapclover.weatherapp.extensions.ctx
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_forecast.view.*
+import java.text.DateFormat
+import java.util.*
 
 /**
  * Created by Daniel on 15/07/2017.
@@ -28,17 +30,22 @@ class ForecastListAdapter(val weekForecast: DomainClasses.ForecastList,
         holder.bindForecast(weekForecast[position])
     }
 
-    class ViewHolder(view: View, val itemClick: (DomainClasses.Forecast) -> Unit) : RecyclerView.ViewHolder(view){
+    class ViewHolder(view: View, val itemClick: (DomainClasses.Forecast) -> Unit) : RecyclerView.ViewHolder(view) {
 
-        fun bindForecast(forecast: DomainClasses.Forecast){
-            with(forecast){
+        fun bindForecast(forecast: DomainClasses.Forecast) {
+            with(forecast) {
                 Picasso.with(itemView.ctx).load(iconUrl).into(itemView.icon)
-                itemView.date.text = date
+                itemView.date.text = convertDate(date)
                 itemView.description.text = description
                 itemView.maxTemperature.text = "$high"
                 itemView.minTemperature.text = "$low"
-                itemView.setOnClickListener{ itemClick(this)}
+                itemView.setOnClickListener { itemClick(this) }
             }
+        }
+
+        private fun convertDate(date: Long): String {
+            val df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
+            return df.format(date)
         }
     }
 }

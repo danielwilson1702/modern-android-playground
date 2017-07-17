@@ -7,9 +7,9 @@ import com.sp.loylapclover.weatherapp.domain.ForecastDataMapper
 /**
  * Created by Daniel on 15/07/2017.
  */
-class RequestForecastCommand(val zipCode: String) : Command<DomainClasses.ForecastList> {
+class RequestForecastCommand(val zipCode: Long) : Command<DomainClasses.ForecastList> {
     override fun execute(): DomainClasses.ForecastList {
         val forecastRequest = ForecastRequest(zipCode)
-        return ForecastDataMapper().convertFromDataModel(forecastRequest.execute())
+        return ForecastDataMapper().convertFromDataModel(zipCode, forecastRequest.execute())
     }
 }

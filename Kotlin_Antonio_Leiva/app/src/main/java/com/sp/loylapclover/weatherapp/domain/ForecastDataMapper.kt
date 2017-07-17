@@ -11,9 +11,8 @@ import com.sp.loylapclover.weatherapp.domain.model.DomainClasses.Forecast as Mod
  * Created by Daniel on 15/07/2017.
  */
 class ForecastDataMapper {
-    fun convertFromDataModel(forecast: ForecastResult): ForecastList {
-        return ForecastList(forecast.city.name, forecast.city.country,
-                convertForecastListToDomain(forecast.list))
+    fun convertFromDataModel(zipCode: Long, forecast: ForecastResult) = with(forecast) {
+                ForecastList(zipCode, city.name, city.country, convertForecastListToDomain(list))
     }
 
     private fun convertForecastListToDomain(list: List<ResponseClasses.Forecast>):
@@ -21,10 +20,9 @@ class ForecastDataMapper {
         return list.map { convertForecastItemToDomain(it) }
     }
 
-    private fun convertForecastItemToDomain(forecast: ResponseClasses.Forecast): ModelForecast {
-        return ModelForecast(convertDate(forecast.dt),
-                forecast.weather[0].description, forecast.temp.max.toInt(), forecast.temp.min.toInt(),
-                generateIconUrl(forecast.weather[0].icon))
+    private fun convertForecastItemToDomain(forecast: ResponseClasses.Forecast) = with(forecast) {
+                ModelForecast(dt, weather[0].description, temp.max.toInt(), temp.min.toInt(),
+                                generateIconUrl(weather[0].icon))
     }
 
     private fun convertDate(date: Long): String {
