@@ -1,0 +1,60 @@
+--------------Retrofit:
+https://savvyapps.com/blog/kotlin-tips-android-development
+Lazy loading, e.g.
+
+val purchasingApi: PurchasingApi by lazy {
+    val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(API_URL)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+    retrofit.create(PurchasingApi::class.java)
+}
+
+--------------Lambdas:
+button.setOnClickListener { view ->
+    startDetailActivity()
+}
+
+toolbar.setOnLongClickListener {
+    showContextMenu()
+    true
+}
+
+--------------Comapanion object (intents)
+class ViewUserActivity : AppCompatActivity() {
+
+    companion object {
+
+        const val KEY_USER = "user"
+
+        fun intent(context: Context, user: User): Intent {
+            val intent = Intent(context, ViewUserActivity::class.java)
+            intent.putExtra(KEY_USER, user)
+            return intent
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_cooking)
+
+        val user = intent.getParcelableExtra<User>(KEY_USER)
+        //...
+    }
+}
+
+The call to create this Intent looks and feels familiar to what you would see in Java:
+val intent = ViewUserActivity.intent(context, user)
+startActivity(intent)
+
+-------------Extension
+fun Activity.hideKeyboard(): Boolean {
+    val view = currentFocus
+    view?.let {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE)
+                as InputMethodManager
+        return inputMethodManager.hideSoftInputFromWindow(view.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS)
+    }
+    return false
+}

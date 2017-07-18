@@ -2,8 +2,12 @@ package com.example.danie.notes
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.transition.Transition
 import android.util.Log
 import com.example.danie.notes.extensions.isTuesday
+import java.math.BigDecimal
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +33,19 @@ class MainActivity : AppCompatActivity() {
 
         //Basic casting
         Log.d("Main", "3.14 to Int: " + (3.14.toInt()))
+        //Smart casting, is and when
+        val x = "string"
+        if (x !is String || x.length == 0) println("X is not a string or it's length is 0")
+
+        /*when (x) {
+            is Int -> print(x + 1)
+            is String -> print(x.length + 1)
+            is IntArray -> print(x.sum())
+        }*/
+
+        //Nullable safe cast
+        val x2 = "0"
+        val x1: String? = x2 as? String
 
         //Strings
         val myName = "Dan Wilson"
@@ -299,6 +316,28 @@ class MainActivity : AppCompatActivity() {
 
         var nullVal3 = returnNull()
         var nullVal4: String = returnNull() ?: "No Name"
+
+        //Infix extension function example
+        data class Money(var amount: BigDecimal, var currency: String)
+        infix fun Int.percentOf(money: Money) = money.amount.multiply(this.bd).divide(100.bd)
+
+        val popcorn = Money(200.bd, "$")
+        7 percentOf popcorn
+
+        //Extension property
+        val longExample = 100L
+        val bd = 100.bd
+
+        //Jake https://www.youtube.com/watch?v=fPzxfeDJDzY
+        //delegate override - interesting ability to kill unused interface methods
+        class MyListener : Transition.TransitionListener by EmptyTransitionListener{
+            override fun onTransitionStart(transaction: Transition) {
+
+            }
+        }
+
+        //Object expression
+        ThreadUtil.onMainThread(Runnable { /*Do sumfing*/ })
     }
 
     interface Flyable{
@@ -314,4 +353,26 @@ class MainActivity : AppCompatActivity() {
             println("MathOnList ${myFunc(num)}")
         }
     }
+
+    object EmptyTransitionListener : Transition.TransitionListener{
+        override fun onTransitionEnd(transition: Transition?) {}
+        override fun onTransitionResume(transition: Transition?) {}
+        override fun onTransitionPause(transition: Transition?) {}
+        override fun onTransitionCancel(transition: Transition?) {}
+        override fun onTransitionStart(transition: Transition?) {}
+    }
+
+
+    object ThreadUtil {
+
+        fun onMainThread(runnable: Runnable) {
+            val mainHandler = Handler(Looper.getMainLooper())
+            mainHandler.post(runnable)
+        }
+    }
 }
+
+private val Int.bd: BigDecimal
+    get() {
+        return BigDecimal(this)
+    }
