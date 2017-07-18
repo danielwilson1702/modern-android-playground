@@ -12,6 +12,7 @@ import java.nio.file.Files.delete
  * Created by danie on 17/07/2017.
  */
 
+/*
 //Feed 'sum' two ints, and it will give us back one
 val sum: (Int, Int) -> Int = { x, y -> x + y }
 val w = sum(5, 4)
@@ -103,3 +104,4 @@ val n = notification(context){
 
 //
 
+*/
