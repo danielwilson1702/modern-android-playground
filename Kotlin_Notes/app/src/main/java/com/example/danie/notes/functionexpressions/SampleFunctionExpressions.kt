@@ -1,15 +1,8 @@
 package com.example.danie.notes.functionexpressions
 
-import android.app.Notification
-import android.content.Context
-import android.content.SharedPreferences
-import android.database.sqlite.SQLiteDatabase
-import android.util.JsonReader
-import android.view.ContextMenu
-import java.nio.file.Files.delete
-
 /**
  * Created by danie on 17/07/2017.
+ * Jake on Kotlin https://www.youtube.com/watch?v=A2LukgT2mKc
  */
 
 /*
@@ -20,12 +13,13 @@ val w = sum(5, 4)
 val sumAlternative = { x: Int, y: Int -> x + y }
 val v = sumAlternative(5, 4)
 
+//Simple functions with lambdas
 val notEmpty: (String) -> Boolean = { !it.isEmpty() }
 val atLeastFour: (String) -> Boolean = { it.length > 4 }
 val fourDigits: (String) -> Boolean = { it.matches(Regex("\\d{4}")) }
 val validCreditCard: (String) -> Boolean = { luhnCheck(it) }
 
-//Higher-Order Functions
+//-----------Higher-Order Functions
 fun <T> List<T>.filter(predicate: (T) -> Boolean): List<T> {
     val newList = ArrayList<T>()
     for (item in this) {
@@ -73,7 +67,7 @@ db.inTransaction{
     delete("users", "first_name = ?", arrayOf("Jake"))
 }
 
-//
+//Sexy shared prefs
 inline fun SharedPreferences.edit(func: SharedPreferences.Editor.() -> Unit) {
     val editor = edit()
     editor.func()
@@ -89,7 +83,7 @@ preferences.edit{
     remove("username")
 }
 
-//
+//Build pattern implementation
 inline fun notification(context: Context,
                         func: Notification.Builder.() -> Unit): Notification {
     val builder = Notification.Builder(context)

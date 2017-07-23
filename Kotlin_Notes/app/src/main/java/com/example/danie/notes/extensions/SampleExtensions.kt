@@ -7,12 +7,11 @@ import android.database.Cursor
 import android.os.Build
 import android.support.v4.view.ViewCompat
 import android.view.View
-import android.widget.EditText
-import com.example.danie.notes.BuildConfig
 import java.util.*
 
 /**
  * Created by danie on 17/07/2017.
+ * Jake on Kotlin https://www.youtube.com/watch?v=A2LukgT2mKc
  */
 
 fun Date.isTuesday(): Boolean {

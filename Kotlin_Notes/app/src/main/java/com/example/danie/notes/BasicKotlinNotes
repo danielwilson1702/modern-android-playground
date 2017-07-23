@@ -1,0 +1,17 @@
+--------------Lambdas:
+button.setOnClickListener { view ->
+    startDetailActivity()
+}
+
+toolbar.setOnLongClickListener {
+    showContextMenu()
+    true
+}
+
+val sumAlternative = { x: Int, y: Int -> x + y }
+val v = sumAlternative(5, 4)
+
+val notEmpty: (String) -> Boolean = { !it.isEmpty() }
+val atLeastFour: (String) -> Boolean = { it.length > 4 }
+val fourDigits: (String) -> Boolean = { it.matches(Regex("\\d{4}")) }
+val validCreditCard: (String) -> Boolean = { luhnCheck(it) }
