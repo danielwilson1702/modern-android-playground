@@ -99,7 +99,6 @@ class HadiOnKotlin : AppCompatActivity() {
         //Lazy init
         val lazyinit: Int by lazy { 10 }
 
-
         var i = 100
         while (i > 0) {
             i--

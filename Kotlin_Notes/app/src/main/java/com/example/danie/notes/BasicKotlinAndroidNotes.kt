@@ -1,6 +1,7 @@
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.view.inputmethod.InputMethodManager
 
 
@@ -92,3 +93,55 @@ fun Activity.hideKeyboard(): Boolean {
     return false
 }
 //</editor-fold>
+
+//Jake on Kotlin https://www.youtube.com/watch?v=A2LukgT2mKc
+
+//<editor-fold desc="Extension Function Expression - Shared preferences ">
+/*inline fun SharedPreferences.edit(func: SharedPreferences.Editor.() -> Unit) {
+    val editor = edit()
+    editor.func()
+    editor.apply()
+}
+
+fun SharedPreferences.Editor.set(pair: Pair<String, String>) =
+        putString(pair.first, pair.second)
+
+preferences.edit{
+    putString("foo" to "bar") //'to' is an infix method to create a Pair
+    putString("fizz" to "buzz")
+    remove("username")
+}*/
+//</editor-fold/>
+
+//<editor-fold desc="Extension Function Expression - Notification Builder">
+/*
+inline fun notification(context: Context,
+                        func: Notification.Builder.() -> Unit): Notification {
+    val builder = Notification.Builder(context)
+    builder.func()
+    return builder.build()
+}
+
+val n = notification(context){
+    setContentTitle("Hi")
+    setSubText("Hello")
+}*/
+//</editor-fold/>
+
+//<editor-fold desc="Extension Function Expression - DB transaction">
+//For example this will take a function and sandwich it between begin, success and end calls
+//inline is an allocation optimization, almost always they should be inline
+/*inline fun SQLiteDatabase.inTransaction(func: SQLiteDatabase.() -> Unit) {
+    beginTransaction()
+    try {
+        func() //(this = the SQLiteDatabase)
+        setTransactionSuccessful()
+    } finally {
+        endTransaction()
+    }
+}
+
+db.inTransaction{
+    delete("users", "first_name = ?", arrayOf("Jake"))
+}*/
+//</editor-fold/>

@@ -10,7 +10,7 @@ import java.util.*
  * Derek Banas Kotlin in one video https://www.youtube.com/watch?v=H_oGi8uuDpA
  * Simple syntax
  */
-class MainActivity : AppCompatActivity() {
+class DerekBanasOnKotlin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
